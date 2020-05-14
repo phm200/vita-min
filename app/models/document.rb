@@ -22,4 +22,15 @@ class Document < ApplicationRecord
 
   belongs_to :intake
   has_one_attached :upload
+
+  #before_save :check_for_malware
+
+  def safe?
+    return true unless upload.present?
+
+    self.upload.open do |file|
+      return Clamby.safe?(file.path)
+    end
+  end
 end
+

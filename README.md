@@ -25,6 +25,12 @@ brew install imagemagick poppler ghostscript
 
 # 5. Get the secret key from LastPass / someone who has it set up.
 echo "[secret key]" > config/master.key
+
+# 6. Install ClamAV
+brew install clamav
+
+# you may want to add /usr/local/sbin to your path at this point
+# setup instructions at http://make.a.gist.about.this
 ```
 
 ## Running background jobs in development

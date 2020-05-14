@@ -48,6 +48,9 @@ gem 'fix-db-schema-conflicts'
 gem 'valid_email2'
 gem 'auto_strip_attributes'
 
+# Use clamby for virus scanning of attachments
+gem 'clamby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
