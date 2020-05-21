@@ -35,7 +35,7 @@ RUN rm -rf /var/lib/apt/lists/*
 ADD Gemfile /app/
 ADD Gemfile.lock /app/
 WORKDIR /app
-RUN bundle install
+RUN bundle install --without development test
 
 ADD . /app
 
@@ -44,7 +44,7 @@ ADD . /app
 # Review http://go.aptible.com/assets for production-ready advice.
 RUN set -a \
  && . ./.aptible.env \
- && bundle exec rake assets:precompile
+ && bundle exec rake assets:precompile \
  && bundle exec rake scan:documents
 
 # TODO: remove the scan:documents from the Dockerfile after scanning?
