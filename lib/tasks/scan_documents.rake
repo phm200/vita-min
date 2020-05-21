@@ -6,9 +6,13 @@ namespace :scan do
     Intake.all.each do |i|
       i.documents.each do |d|
         print '.'
-        unless d.safe?
-          messages << "<intake ##{i.id}/doc ##{d.id}[#{d.document_type}]> failed the malware scan."
-          infected_count += 1
+        begin
+          unless d.safe?
+            messages << "<intake ##{i.id}/doc ##{d.id}[#{d.document_type}]> failed the malware scan."
+            infected_count += 1
+          end
+        rescue
+          print ','
         end
       end
     end

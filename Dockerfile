@@ -16,6 +16,8 @@ RUN wget -q -O /tmp/clamav-freshclam.deb http://ftp.mx.debian.org/debian/pool/ma
  && wget -q -O /tmp/clamdscan.deb http://ftp.ca.debian.org/debian/pool/main/c/clamav/clamdscan_0.102.2+dfsg-0+deb10u1_amd64.deb \
  && dpkg -i /tmp/libclamav9.deb /tmp/clamav-base.deb /tmp/clamav-freshclam.deb /tmp/clamav-daemon.deb /tmp/clamav.deb /tmp/clamdscan.deb
 
+ADD etc/clamav/clamd.conf /etc/clamav/
+
 RUN freshclam
 RUN update-rc.d clamav-freshclam enable && service clamav-freshclam start \
  && update-rc.d clamav-daemon enable && service clamav-daemon start
