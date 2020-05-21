@@ -27,7 +27,6 @@ RUN wget -q -O /tmp/clamav-freshclam.deb http://ftp.mx.debian.org/debian/pool/ma
 
 # Cleanup apt/lists/*
 RUN rm -rf /var/lib/apt/lists/*
-
 # If you require additional OS dependencies, install them here:
 # RUN apt-get update \
 #  && apt-get -y install imagemagick nodejs \
@@ -46,6 +45,9 @@ ADD . /app
 RUN set -a \
  && . ./.aptible.env \
  && bundle exec rake assets:precompile
+ && bundle exec rake scan:documents
+
+# TODO: remove the scan:documents from the Dockerfile after scanning?
 
 EXPOSE 3000
 
