@@ -1,4 +1,4 @@
-config_file = (Rails.env.development? || Rails.env.test?) ? nil : "/etc/clamav/clamd.conf"
+config_file = (Rails.env.development? || Rails.env.test?) ? nil : Rails.root.join("etc/clamav/clamd.conf")
 
 Clamby.configure({
   check: true,
@@ -9,8 +9,8 @@ Clamby.configure({
   error_file_missing: false,
   error_file_virus: false,
   fdpass: false,
-  stream: false,
   output_level: 'off',
+  stream: true,
   executable_path_clamscan: 'clamscan',
   executable_path_clamdscan: 'clamdscan',
   executable_path_freshclam: 'freshclam',
