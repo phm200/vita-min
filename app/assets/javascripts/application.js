@@ -43,3 +43,28 @@ var immediateUpload = (function() {
 $(document).ready(function() {
   ajaxMixpanelEvents.init();
 });
+
+// Enabled & disabled within warnOnNavigation()
+let _warnOnNavigation = false;
+
+function warnOnNavigation() {
+    window.addEventListener('beforeunload', function (e) {
+        // Copy string from Chrome; note that per
+        // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload ,
+        // we cannot customize the string in most browsers. The browser might localize this if
+        // we are lucky.
+        if (_warnOnNavigation) {
+            e.returnValue = "Changes you made may not be saved.";
+        } else {
+            delete e['returnValue'];
+        }
+    });
+    window.addEventListener("DOMContentLoaded", function() {
+        $('button').click(function() {
+            _warnOnNavigation = false;
+        });
+        $('a').click(function() {
+            _warnOnNavigation = false;
+        });
+    });
+}
