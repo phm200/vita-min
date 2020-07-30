@@ -2,21 +2,22 @@ module Documents
   class DocumentUploadQuestionController < Questions::TicketedQuestionsController
     layout "document_upload"
 
+    delegate :document_type_key, to: :class
     delegate :document_type, to: :class
     helper_method :document_type
+    helper_method :document_type_key
     helper_method :destroy_document_path
 
     def edit
-      return if self.class.document_type.nil?
+      return if document_type.nil?
 
       @documents = current_intake.documents.of_type(self.class.displayed_document_types)
-      @form = form_class.new(document_type, current_intake, form_params)
+      @form = form_class.new(document_type_key, current_intake, form_params)
     end
 
     def update
-      return if self.class.document_type.nil?
-
-      @form = form_class.new(document_type, current_intake, form_params)
+      return if document_type.nil?
+      @form = form_class.new(document_type_key, current_intake, form_params)
       if @form.valid?
         form_saved = @form.save
         after_update_success
@@ -26,6 +27,18 @@ module Documents
         track_validation_error
         render :edit
       end
+    end
+
+    def self.show?(intake)
+      if document_type.respond_to?(:relevant_to?)
+        document_type.relevant_to? intake
+      else
+        super
+      end
+    end
+
+    def self.document_type_key
+      document_type.respond_to?(:relevant_to?) ? document_type.key : document_type
     end
 
     private
@@ -47,14 +60,14 @@ module Documents
     end
 
     def self.displayed_document_types
-      [self.document_type]
+      [self.document_type_key]
     end
 
     def track_document_upload
       return unless @form.document.present?
 
       send_mixpanel_event(event_name: "document_uploaded", data: {
-        document_type: document_type,
+        document_type: document_type_key,
         file_extension: File.extname(@form.document.original_filename),
         file_content_type: @form.document.content_type,
       })

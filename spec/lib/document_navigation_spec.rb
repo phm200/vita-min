@@ -11,19 +11,19 @@ RSpec.describe DocumentNavigation do
     end
 
     class FirstController < BaseController
-      def self.document_type
+      def self.document_type_key
         "Doc-1"
       end
     end
 
     class SecondController < BaseController
-      def self.document_type
+      def self.document_type_key
         "Doc-2"
       end
     end
 
     class ThirdController < BaseController
-      def self.document_type
+      def self.document_type_key
         "Doc-3"
       end
     end

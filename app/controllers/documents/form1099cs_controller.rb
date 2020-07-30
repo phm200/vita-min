@@ -1,11 +1,11 @@
 module Documents
   class Form1099csController < DocumentUploadQuestionController
     def self.show?(intake)
-      intake.had_debt_forgiven_yes?
+      document_type.relevant_to? intake
     end
 
     def self.document_type
-      "1099-C"
+      DocumentTypes::Form1099C
     end
   end
 end

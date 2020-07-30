@@ -9,7 +9,7 @@ module Documents
     end
 
     def self.document_type
-      "Selfie"
+      DocumentTypes::Selfie
     end
   end
 end

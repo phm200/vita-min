@@ -12,7 +12,7 @@ module Documents
     end
 
     def self.document_type
-      "SSN or ITIN"
+      DocumentTypes::SsnItin
     end
   end
 end

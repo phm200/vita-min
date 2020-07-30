@@ -9,7 +9,7 @@ module Documents
     end
 
     def self.document_type
-      "ID"
+      DocumentTypes::Identity
     end
   end
 end
